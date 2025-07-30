@@ -2,7 +2,6 @@ package io.github.amsatrio.api;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -55,9 +54,8 @@ public class HelloWorldApi {
     @Path("/hello") // Path parameter
     @Produces(MediaType.APPLICATION_JSON)
     public String find() {
-        ResponseDto<Object> responseDto = new ResponseDto<>(HttpServletResponse.SC_OK, "success",
-                helloWorldService.find());
-
+        ResponseDto<Object> responseDto = new ResponseDto<>();
+        responseDto.generateResponse(helloWorldService.find());
         return responseDto.toJsonString();
     }
 
@@ -67,8 +65,8 @@ public class HelloWorldApi {
     @Produces(MediaType.APPLICATION_JSON)
     public String update(HelloWorldDto helloWorldDto) {
         helloWorldDto = helloWorldService.update(helloWorldDto.getMessage());
-        ResponseDto<Object> responseDto = new ResponseDto<>(HttpServletResponse.SC_OK, "success",
-                helloWorldDto);
+        ResponseDto<Object> responseDto = new ResponseDto<>();
+        responseDto.generateResponse(helloWorldDto);
 
         return responseDto.toJsonString();
     }
