@@ -2,6 +2,7 @@ package io.github.amsatrio.api;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import io.github.amsatrio.dto.HelloWorldDto;
@@ -18,7 +20,7 @@ import io.github.amsatrio.service.HelloWorldService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Path("api")
+@Path("hello-world-api")
 @RequestScoped
 @Provider
 public class HelloWorldApi {
@@ -47,27 +49,26 @@ public class HelloWorldApi {
     @Path("/{message}") // Path parameter
     @Produces(MediaType.APPLICATION_JSON)
     public String getCustomMessage(@PathParam("message") String message) {
-        return "{\"receivedMessage\": \"" + message + "\"}";
+        ResponseDto<String> responseDto = new ResponseDto<>();
+        responseDto.generateResponse(message);
+        return responseDto.toJsonString();
     }
 
     @GET
     @Path("/hello") // Path parameter
     @Produces(MediaType.APPLICATION_JSON)
-    public String find() {
+    public Response find() {
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        responseDto.generateResponse(helloWorldService.find());
-        return responseDto.toJsonString();
+        return responseDto.generateResponse(helloWorldService.find());
     }
 
     @POST
     @Path("/hello") // Path parameter
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String update(HelloWorldDto helloWorldDto) {
+    public Response update(@Valid HelloWorldDto helloWorldDto) {
         helloWorldDto = helloWorldService.update(helloWorldDto.getMessage());
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        responseDto.generateResponse(helloWorldDto);
-
-        return responseDto.toJsonString();
+        return responseDto.generateResponse(null);
     }
 }
