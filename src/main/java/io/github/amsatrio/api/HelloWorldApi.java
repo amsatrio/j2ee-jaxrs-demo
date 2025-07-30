@@ -1,4 +1,4 @@
-package io.github.amsatrio.resources;
+package io.github.amsatrio.api;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -16,11 +16,13 @@ import javax.ws.rs.ext.Provider;
 import io.github.amsatrio.dto.HelloWorldDto;
 import io.github.amsatrio.dto.ResponseDto;
 import io.github.amsatrio.service.HelloWorldService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Path("api")
 @RequestScoped
 @Provider
-public class HelloWorldResource {
+public class HelloWorldApi {
 
     @Inject
     private HelloWorldService helloWorldService;
@@ -28,6 +30,7 @@ public class HelloWorldResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getHello() {
+        log.info("getHello()");
         return "Hello, JAX-RS!";
     }
 
