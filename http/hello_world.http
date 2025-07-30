@@ -3,11 +3,9 @@
 ### GET
 curl  -H 'Content-Type: application/json' \
       -X GET {{baseUrl}}/hello-world-api
-
 ### GET (query param)
 curl  -H 'Content-Type: application/json' \
       -X GET {{baseUrl}}/hello-world-api/greeting?name=me
-
 ### GET (path param)
 curl  -H 'Content-Type: application/json' \
       -X GET {{baseUrl}}/hello-world-api/test
@@ -23,3 +21,16 @@ curl  -H 'Content-Type: application/json' \
 curl  -H 'Content-Type: application/json' \
       -X POST {{baseUrl}}/hello-world-api/hello \
       -d '{"message":"a"}'
+
+### POST (decrypt request body)
+curl  -H 'Content-Type: application/json' \
+      -X POST {{baseUrl}}/hello-world-api/hello-decrypt-payload \
+      -d 'eyJtZXNzYWdlIjoiYWFzYXMifQ=='
+### POST (encrypt response body)
+curl  -H 'Content-Type: application/json' \
+      -X POST {{baseUrl}}/hello-world-api/hello-encrypt-payload \
+      -d '{"message":"aasas"}'
+### POST (decrypt request body, encrypt response body)
+curl  -H 'Content-Type: application/json' \
+      -X POST {{baseUrl}}/hello-world-api/hello-encrypt-decrypt-payload \
+      -d 'eyJtZXNzYWdlIjoiYWFzYXMifQ=='

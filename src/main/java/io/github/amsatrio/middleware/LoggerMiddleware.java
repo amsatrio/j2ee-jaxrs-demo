@@ -16,14 +16,14 @@ public class LoggerMiddleware implements ContainerRequestFilter, ContainerRespon
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        log.info("filter request");
+        log.info("filter() request");
         log.info("url: " + requestContext.getUriInfo().getRequestUri().toString());
     }
 
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-        log.info("filter response");
+        log.info("filter() response");
         log.info("status: " + responseContext.getStatus());
-        log.info("body: " + responseContext.getEntity());
+        log.info("body: {}", responseContext.getEntity());
     }
 }

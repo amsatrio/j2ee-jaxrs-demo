@@ -14,6 +14,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
+import io.github.amsatrio.annotation.DecryptPayload;
+import io.github.amsatrio.annotation.EncryptPayload;
 import io.github.amsatrio.dto.HelloWorldDto;
 import io.github.amsatrio.dto.ResponseDto;
 import io.github.amsatrio.service.HelloWorldService;
@@ -46,7 +48,7 @@ public class HelloWorldApi {
     }
 
     @GET
-    @Path("/{message}") // Path parameter
+    @Path("/{message}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCustomMessage(@PathParam("message") String message) {
         ResponseDto<String> responseDto = new ResponseDto<>();
@@ -55,7 +57,7 @@ public class HelloWorldApi {
     }
 
     @GET
-    @Path("/hello") // Path parameter
+    @Path("/hello")
     @Produces(MediaType.APPLICATION_JSON)
     public Response find() {
         ResponseDto<Object> responseDto = new ResponseDto<>();
@@ -63,10 +65,44 @@ public class HelloWorldApi {
     }
 
     @POST
-    @Path("/hello") // Path parameter
+    @Path("/hello")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@Valid HelloWorldDto helloWorldDto) {
+        helloWorldDto = helloWorldService.update(helloWorldDto.getMessage());
+        ResponseDto<Object> responseDto = new ResponseDto<>();
+        return responseDto.generateResponse(null);
+    }
+
+    @POST
+    @Path("/hello-decrypt-payload")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @DecryptPayload
+    public Response updateHelloDecryptPayload(@Valid HelloWorldDto helloWorldDto) {
+        helloWorldDto = helloWorldService.update(helloWorldDto.getMessage());
+        ResponseDto<Object> responseDto = new ResponseDto<>();
+        return responseDto.generateResponse(null);
+    }
+
+    @POST
+    @Path("/hello-encrypt-payload")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @EncryptPayload
+    public Response updateHelloEncryptPayload(@Valid HelloWorldDto helloWorldDto) {
+        helloWorldDto = helloWorldService.update(helloWorldDto.getMessage());
+        ResponseDto<Object> responseDto = new ResponseDto<>();
+        return responseDto.generateResponse(null);
+    }
+
+    @POST
+    @Path("/hello-encrypt-decrypt-payload")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @DecryptPayload
+    @EncryptPayload
+    public Response updateHelloEncryptDecryptPayload(@Valid HelloWorldDto helloWorldDto) {
         helloWorldDto = helloWorldService.update(helloWorldDto.getMessage());
         ResponseDto<Object> responseDto = new ResponseDto<>();
         return responseDto.generateResponse(null);
