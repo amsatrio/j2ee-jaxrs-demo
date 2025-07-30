@@ -1,0 +1,25 @@
+@baseUrl = "http://localhost:8080/j2ee-jaxrs-demo"
+
+### GET
+curl  -H 'Content-Type: application/json' \
+      -X GET {{baseUrl}}/hello-world-api
+
+### GET (query param)
+curl  -H 'Content-Type: application/json' \
+      -X GET {{baseUrl}}/hello-world-api/greeting?name=me
+
+### GET (path param)
+curl  -H 'Content-Type: application/json' \
+      -X GET {{baseUrl}}/hello-world-api/test
+
+### GET
+curl  -H 'Content-Type: application/json' \
+      -X GET {{baseUrl}}/hello-world-api/hello
+### POST (valid payload)
+curl  -H 'Content-Type: application/json' \
+      -X POST {{baseUrl}}/hello-world-api/hello \
+      -d '{"message":"aaa"}'
+### POST (invalid payload)
+curl  -H 'Content-Type: application/json' \
+      -X POST {{baseUrl}}/hello-world-api/hello \
+      -d '{"message":"a"}'
