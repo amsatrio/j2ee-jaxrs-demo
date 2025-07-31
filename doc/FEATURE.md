@@ -4,7 +4,7 @@
 
 - [x] CRUD
 - [ ] Search
-- [ ] Pagination
+- [x] Pagination
 - [ ] Filter
 - [ ] Order
 

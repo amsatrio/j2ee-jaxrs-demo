@@ -19,6 +19,7 @@ import javax.ws.rs.ext.Provider;
 
 import io.github.amsatrio.dao.MBiodataDao;
 import io.github.amsatrio.dto.MBiodataDto;
+import io.github.amsatrio.dto.PageDto;
 import io.github.amsatrio.dto.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +47,16 @@ public class MBiodataApi {
     public Response findAll() throws SQLException {
         ResponseDto<Object> responseDto = new ResponseDto<>();
         return responseDto.generateResponse(mBiodataDao.findAll());
+    }
+
+    @GET
+    @Path("/page")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findPage(@QueryParam("page") int page, @QueryParam("size") int size) throws SQLException {
+        ResponseDto<Object> responseDto = new ResponseDto<>();
+        PageDto<MBiodataDto> pageDto = new PageDto<>();
+        pageDto.init(mBiodataDao.findPage(page, size), Long.valueOf(page), Long.valueOf(size), mBiodataDao.countData());
+        return responseDto.generateResponse(pageDto);
     }
 
     @POST

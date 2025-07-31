@@ -63,11 +63,11 @@ public class MBiodataDao {
             connection = databaseProvider.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setLong(1, id);
-            try (ResultSet rs = statement.executeQuery()) {
-                if (rs.next()) { // Move cursor to the first (and only) row
-                    return MBiodataDto.mapRow(rs);
-                }
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) { // Move cursor to the first (and only) row
+                return MBiodataDto.mapRow(rs);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -81,6 +81,52 @@ public class MBiodataDao {
     public List<MBiodataDto> findAll() throws SQLException {
         List<MBiodataDto> biodataList = new ArrayList<>();
         String sql = "SELECT * FROM m_biodata";
+
+        Connection connection = null;
+        try {
+            connection = databaseProvider.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                biodataList.add(MBiodataDto.mapRow(rs));
+            }
+        } finally {
+
+            databaseProvider.close(connection);
+
+        }
+        return biodataList;
+    }
+
+    public Long countData() {
+        String sql = "SELECT COUNT(*) FROM m_biodata";
+
+        Connection connection = null;
+        try {
+            connection = databaseProvider.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getLong(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+            databaseProvider.close(connection);
+
+        }
+        return 0L;
+    }
+
+    public List<MBiodataDto> findPage(int page, int size) throws SQLException {
+        List<MBiodataDto> biodataList = new ArrayList<>();
+
+        int offset = page * size;
+        String sql = "SELECT * FROM m_biodata \r\n" + //
+                "ORDER BY id \r\n" + //
+                "OFFSET " + offset + " ROWS \r\n" + //
+                "FETCH NEXT " + size + " ROWS ONLY";
 
         Connection connection = null;
         try {
