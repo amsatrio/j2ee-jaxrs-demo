@@ -17,6 +17,7 @@ public class LoggerMiddleware implements ContainerRequestFilter, ContainerRespon
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         log.info("filter() request");
+        log.info("method: " + requestContext.getMethod());
         log.info("url: " + requestContext.getUriInfo().getRequestUri().toString());
     }
 
