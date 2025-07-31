@@ -1,0 +1,23 @@
+@baseUrl = "http://localhost:8080/j2ee-jaxrs-demo"
+
+### GET all
+curl  -H 'Content-Type: application/json' \
+      -X GET {{baseUrl}}/api/m-biodata/all
+### GET by id
+curl  -H 'Content-Type: application/json' \
+      -X GET {{baseUrl}}/api/m-biodata?id=1
+### POST
+curl  -H 'Content-Type: application/json' \
+      -X POST {{baseUrl}}/api/m-biodata \
+      -d '{
+    "fullname": "John Doe",
+    "mobilePhone": "628123456789",
+    "image": "aGVsbG8gd29ybGQ=",
+    "imagePath": "https://example.com/images/john_doe.jpg",
+    "createdBy": 101,
+    "createdOn": "2024-07-30 16:30:00",
+    "isDelete": false
+  }'
+### DELETE by id
+curl  -H 'Content-Type: application/json' \
+      -X DELETE {{baseUrl}}/api/m-biodata?id=1
