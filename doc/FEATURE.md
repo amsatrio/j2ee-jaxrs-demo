@@ -2,37 +2,37 @@
 
 ## data manipulation
 
-1. [x] CRUD
-2. [] Search
-3. [] Pagination
-4. [] Filter
-5. [] Order
+- [x] CRUD
+- [ ] Search
+- [ ] Pagination
+- [ ] Filter
+- [ ] Order
 
 ## security
 
-1. [] Authentication
-2. [] Authorization
-3. [] TLS
-4. [] CORS
+- [ ] Authentication
+- [ ] Authorization
+- [ ] TLS
+- [ ] CORS
 
 ## midleware
 
-1. [] Compression Middleware
-2. [] Session Middleware
-3. [x] Logger Middleware
-4. [] Global Exception
-5. [] Rate Limitter Middleware
-6. [] Cache Redis Middleware
+- [ ] Compression Middleware
+- [ ] Session Middleware
+- [x] Logger Middleware
+- [ ] Global Exception
+- [ ] Rate Limitter Middleware
+- [ ] Cache Redis Middleware
 
 ## documentation
 
-1. [] Logger Global
-2. [] Swagger Documentation
+- [ ] Logger Global
+- [ ] Swagger Documentation
 
 ## testing
 
-1. [] Unit Testing
+- [ ] Unit Testing
 
 ## container
 
-1. [] Dockerization
+- [ ] Dockerization
