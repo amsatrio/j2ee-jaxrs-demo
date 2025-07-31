@@ -6,7 +6,7 @@ import javax.ws.rs.ext.Provider;
 
 import io.github.amsatrio.dto.ResponseDto;
 
-@Provider
+// @Provider
 public class RuntimeExceptionMapper implements ExceptionMapper<RuntimeException> {
 
     @Override
