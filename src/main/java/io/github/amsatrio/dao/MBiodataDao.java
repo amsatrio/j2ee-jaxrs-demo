@@ -186,7 +186,7 @@ public class MBiodataDao {
                 statement.setLong(5, biodata.getModifiedBy());
 
             statement.setTimestamp(6,
-                    biodata.getModifiedOn() != null ? Timestamp.valueOf(biodata.getModifiedOn()) : null);
+                    biodata.getModifiedOn() != null ? Timestamp.from(biodata.getModifiedOn().toInstant()) : null);
 
             if (biodata.getDeletedBy() == null)
                 statement.setNull(7, java.sql.Types.BIGINT);

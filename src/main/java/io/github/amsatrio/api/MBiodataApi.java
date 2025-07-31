@@ -17,10 +17,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
-import io.github.amsatrio.dao.MBiodataDao;
+import io.github.amsatrio.annotation.MBiodataQualifier;
 import io.github.amsatrio.dto.MBiodataDto;
-import io.github.amsatrio.dto.PageDto;
 import io.github.amsatrio.dto.ResponseDto;
+import io.github.amsatrio.service.CRUDService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,14 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 @Provider
 @Path("api/m-biodata")
 public class MBiodataApi {
-    @Inject
-    private MBiodataDao mBiodataDao;
+    @Inject @MBiodataQualifier
+    private CRUDService<MBiodataDto> crudService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response find(@QueryParam("id") Long id) {
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        MBiodataDto mBiodataDto = mBiodataDao.findById(id);
+        MBiodataDto mBiodataDto = crudService.findById(id);
         if(mBiodataDto == null){
             return responseDto.generateResponse(Response.Status.NOT_FOUND, "data not found", mBiodataDto);
         }
@@ -46,7 +46,7 @@ public class MBiodataApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAll() throws SQLException {
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        return responseDto.generateResponse(mBiodataDao.findAll());
+        return responseDto.generateResponse(crudService.findAll());
     }
 
     @GET
@@ -54,9 +54,7 @@ public class MBiodataApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response findPage(@QueryParam("page") int page, @QueryParam("size") int size) throws SQLException {
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        PageDto<MBiodataDto> pageDto = new PageDto<>();
-        pageDto.init(mBiodataDao.findPage(page, size), Long.valueOf(page), Long.valueOf(size), mBiodataDao.countData());
-        return responseDto.generateResponse(pageDto);
+        return responseDto.generateResponse(crudService.findPage(page, size));
     }
 
     @POST
@@ -64,21 +62,21 @@ public class MBiodataApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(@Valid MBiodataDto mBiodataDto) throws SQLException {
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        return responseDto.generateResponse(Response.Status.CREATED, "success", mBiodataDao.create(mBiodataDto));
+        return responseDto.generateResponse(Response.Status.CREATED, "success", crudService.create(mBiodataDto));
     }
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(@Valid MBiodataDto mBiodataDto) throws SQLException {
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        return responseDto.generateResponse(mBiodataDao.update(mBiodataDto));
+        return responseDto.generateResponse(crudService.update(mBiodataDto) == 1);
     }
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@QueryParam("id") Long id) throws SQLException {
         ResponseDto<Object> responseDto = new ResponseDto<>();
-        int status = mBiodataDao.deleteById(id);
+        int status = crudService.delete(id);
         return responseDto.generateResponse(status == 1);
     }
 }

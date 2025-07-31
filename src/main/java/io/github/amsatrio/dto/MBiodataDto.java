@@ -65,7 +65,7 @@ public class MBiodataDto {
     @JsonProperty("modifiedOn")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @PastOrPresent(message = "ModifiedOn must be in the past or present")
-    private LocalDateTime modifiedOn;
+    private Date modifiedOn;
 
     @JsonProperty("deletedBy")
     @Min(value = 1, message = "DeletedBy must be a positive number")
@@ -133,7 +133,7 @@ public class MBiodataDto {
 
         Timestamp modifiedOnTimestamp = rs.getTimestamp("modified_on");
         if (modifiedOnTimestamp != null) {
-            biodata.setModifiedOn(modifiedOnTimestamp.toLocalDateTime());
+            biodata.setModifiedOn(new Date(modifiedOnTimestamp.toInstant().toEpochMilli()));
         } else {
             biodata.setModifiedOn(null);
         }
