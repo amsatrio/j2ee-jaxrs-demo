@@ -22,6 +22,21 @@ curl  -H 'Content-Type: application/json' \
     "createdOn": "2024-07-30 16:30:00",
     "isDelete": false
   }'
+### PUT
+curl  -H 'Content-Type: application/json' \
+      -X PUT {{baseUrl}}/api/m-biodata \
+      -d '{
+      "id":14,
+    "fullname": "John Doexx",
+    "mobilePhone": "628123456789",
+    "image": "aGVsbG8gd29ybGQ=",
+    "imagePath": "https://example.com/images/john_doe.jpg",
+    "createdBy": 101,
+    "createdOn": "2024-07-30 16:30:00",
+    "modifiedBy": 101,
+    "modifiedOn": "2024-07-30 16:30:00",
+    "isDelete": false
+  }'
 ### DELETE by id
 curl  -H 'Content-Type: application/json' \
       -X DELETE {{baseUrl}}/api/m-biodata?id=1
