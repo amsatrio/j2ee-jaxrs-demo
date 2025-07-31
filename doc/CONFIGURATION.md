@@ -1,7 +1,8 @@
 # Configuration
 
 ## Tomcat database configuration
-```xml ${TOMCAT_HOME}/conf/server.xml
+ ${TOMCAT_HOME}/conf/server.xml
+```xml
 ...
   <GlobalNamingResources>
           <Resource name="jdbc/H2Database"
@@ -32,7 +33,9 @@
   </GlobalNamingResources>
 ...
 ```
-```xml ${TOMCAT_HOME}/conf/context.xml
+
+ ${TOMCAT_HOME}/conf/context.xml
+```xml
 <Context>
     ...
     <ResourceLink name="jdbc/H2DataSource"
@@ -49,6 +52,7 @@
 </Context>
 ```
 
+Get database library and then put them to tomcat lib folder.
 ```sh
 sudo su
 cd $TOMCAT_HOME/lib
